@@ -10,6 +10,7 @@ type SwiftCodesQ interface {
 
 	FilterBySwiftCode(swiftCode string) SwiftCodesQ
 	FilterByHeadquarter(association string) SwiftCodesQ
+	FilterByCountryISO2Code(countryISO2Code string) SwiftCodesQ
 }
 
 type SwiftCode struct {

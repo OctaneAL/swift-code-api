@@ -20,11 +20,11 @@ func (s *service) router(cfg config.Config) chi.Router {
 		),
 	)
 	r.Route("/v1/swift-codes", func(r chi.Router) {
-		// configure endpoints here
 		r.Route("/{swiftCode}", func(r chi.Router) {
 			r.Get("/", handlers.GetBySwiftCode)
 			r.Delete("/", handlers.DeleteSwiftCode)
 		})
+		r.Get("/country/{countryISO2code}", handlers.GetByCountryCode)
 	})
 
 	return r
