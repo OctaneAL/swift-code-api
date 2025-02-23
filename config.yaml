@@ -1,0 +1,19 @@
+log:
+  level: debug
+  disable_sentry: true
+
+db:
+  url: db_url
+
+listener:
+  addr: :8000
+
+parser:
+  data_path: data.csv
+
+cop:
+  disabled: true
+  endpoint: "http://..."
+  upstream: "http://..."
+  service_name: swift-code-api
+  service_port: 80
