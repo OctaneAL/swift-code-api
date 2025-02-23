@@ -16,9 +16,9 @@ type service struct {
 	listener net.Listener
 }
 
-func (s *service) run() error {
+func (s *service) run(cfg config.Config) error {
 	s.log.Info("Service started")
-	r := s.router()
+	r := s.router(cfg)
 
 	if err := s.copus.RegisterChi(r); err != nil {
 		return errors.Wrap(err, "cop failed")
@@ -36,7 +36,7 @@ func newService(cfg config.Config) *service {
 }
 
 func Run(cfg config.Config) {
-	if err := newService(cfg).run(); err != nil {
+	if err := newService(cfg).run(cfg); err != nil {
 		panic(err)
 	}
 }

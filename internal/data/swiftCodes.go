@@ -4,6 +4,12 @@ type SwiftCodesQ interface {
 	New() SwiftCodesQ
 
 	Upsert(swiftCode ...SwiftCode) error
+	Get() (*SwiftCode, error)
+	Select() ([]SwiftCode, error)
+	Delete() error
+
+	FilterBySwiftCode(swiftCode string) SwiftCodesQ
+	FilterByHeadquarter(association string) SwiftCodesQ
 }
 
 type SwiftCode struct {
