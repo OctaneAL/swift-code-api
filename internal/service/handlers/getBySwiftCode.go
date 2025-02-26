@@ -2,35 +2,53 @@ package handlers
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/OctaneAL/swift-code-api/internal/service/requests"
 	"github.com/OctaneAL/swift-code-api/internal/service/responses"
+	"github.com/google/jsonapi"
 	"gitlab.com/distributed_lab/ape"
 	"gitlab.com/distributed_lab/ape/problems"
 )
+
+const recordNotFound = "no swift code found"
+
+var notFoundResponse = jsonapi.ErrorObject{
+	Title:  "Swift code not found",
+	Status: fmt.Sprintf("%d", http.StatusNotFound),
+}
 
 func GetBySwiftCode(w http.ResponseWriter, r *http.Request) {
 	swiftCode := requests.RetrieveStringParam(r, "swiftCode")
 
 	// Check for headquarter
-	// TODO: Return message if swift code is not found
 	if len(swiftCode) >= 3 && swiftCode[len(swiftCode)-3:] == "XXX" {
 		response, err := getHeadquarterDetails(swiftCode, r)
+
 		if err != nil {
-			ape.RenderErr(w, problems.InternalError())
+			if err.Error() == recordNotFound {
+				ape.RenderErr(w, &notFoundResponse)
+			} else {
+				ape.RenderErr(w, problems.InternalError())
+			}
 			return
 		}
+
 		ape.Render(w, response)
-		return
 	} else {
 		response, err := getBranchDetails(swiftCode, r)
+
 		if err != nil {
-			ape.RenderErr(w, problems.InternalError())
+			if err.Error() == recordNotFound {
+				ape.RenderErr(w, &notFoundResponse)
+			} else {
+				ape.RenderErr(w, problems.InternalError())
+			}
 			return
 		}
+
 		ape.Render(w, response)
-		return
 	}
 }
 
@@ -48,8 +66,8 @@ func getHeadquarterDetails(swiftCode string, r *http.Request) (*responses.Headqu
 	headquarter := responses.HeadquarterDetails{
 		SwiftCodeDetails: responses.SwiftCodeDetails{
 			Address:       headquarterRecord.Address,
-			BankName:      headquarterRecord.Name,
-			CountryISO2:   headquarterRecord.CountryISOCode,
+			BankName:      headquarterRecord.BankName,
+			CountryISO2:   headquarterRecord.CountryISO2Code,
 			CountryName:   headquarterRecord.CountryName,
 			IsHeadquarter: true,
 			SwiftCode:     headquarterRecord.SwiftCode,
@@ -70,8 +88,8 @@ func getHeadquarterDetails(swiftCode string, r *http.Request) (*responses.Headqu
 
 		headquarter.Branches = append(headquarter.Branches, responses.SwiftCodeDetails{
 			Address:       branchRecord.Address,
-			BankName:      branchRecord.Name,
-			CountryISO2:   branchRecord.CountryISOCode,
+			BankName:      branchRecord.BankName,
+			CountryISO2:   branchRecord.CountryISO2Code,
 			CountryName:   branchRecord.CountryName,
 			SwiftCode:     branchRecord.SwiftCode,
 			IsHeadquarter: false,
@@ -94,8 +112,8 @@ func getBranchDetails(swiftCode string, r *http.Request) (*responses.SwiftCodeDe
 
 	branch := responses.SwiftCodeDetails{
 		Address:       branchRecord.Address,
-		BankName:      branchRecord.Name,
-		CountryISO2:   branchRecord.CountryISOCode,
+		BankName:      branchRecord.BankName,
+		CountryISO2:   branchRecord.CountryISO2Code,
 		CountryName:   branchRecord.CountryName,
 		IsHeadquarter: false,
 		SwiftCode:     branchRecord.SwiftCode,

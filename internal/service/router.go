@@ -25,6 +25,7 @@ func (s *service) router(cfg config.Config) chi.Router {
 			r.Delete("/", handlers.DeleteSwiftCode)
 		})
 		r.Get("/country/{countryISO2code}", handlers.GetByCountryCode)
+		r.Post("/", handlers.AddSwiftCode)
 	})
 
 	return r

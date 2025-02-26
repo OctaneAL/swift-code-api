@@ -49,15 +49,15 @@ func processData(cfg config.Config) error {
 
 		// TODO: is there a better way to Unpack the row into a struct?
 		swiftCode := data.SwiftCode{
-			ID:             uuid.New().String(),
-			CountryISOCode: row[0],
-			SwiftCode:      row[1],
-			CodeType:       row[2],
-			Name:           row[3],
-			Address:        row[4],
-			TownName:       row[5],
-			CountryName:    row[6],
-			TimeZone:       row[7],
+			ID:              uuid.New().String(),
+			CountryISO2Code: row[0],
+			SwiftCode:       row[1],
+			CodeType:        row[2],
+			BankName:        row[3],
+			Address:         row[4],
+			TownName:        row[5],
+			CountryName:     row[6],
+			TimeZone:        row[7],
 		}
 
 		swiftCodes = append(swiftCodes, swiftCode)

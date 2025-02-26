@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/OctaneAL/swift-code-api/internal/service/requests"
@@ -18,5 +19,9 @@ func DeleteSwiftCode(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusNoContent)
+	response := map[string]string{"message": "Swift code deleted successfully"}
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		Log(r).WithError(err).Error("failed to write response")
+		ape.RenderErr(w, problems.InternalError())
+	}
 }

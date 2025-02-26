@@ -14,13 +14,13 @@ type SwiftCodesQ interface {
 }
 
 type SwiftCode struct {
-	ID             string `db:"id" structs:"id"`
-	CountryISOCode string `db:"country_iso_code" structs:"country_iso_code"`
-	SwiftCode      string `db:"swift_code" structs:"swift_code"`
-	CodeType       string `db:"code_type" structs:"code_type"`
-	Name           string `db:"name" structs:"name"`
-	Address        string `db:"address" structs:"address"`
-	TownName       string `db:"town_name" structs:"town_name"`
-	CountryName    string `db:"country_name" structs:"country_name"`
-	TimeZone       string `db:"time_zone" structs:"time_zone"`
+	ID              string `db:"id" structs:"id"`
+	CountryISO2Code string `db:"country_iso2_code" structs:"country_iso2_code"`
+	SwiftCode       string `db:"swift_code" structs:"swift_code"`
+	CodeType        string `db:"code_type" structs:"code_type"`
+	BankName        string `db:"bank_name" structs:"bank_name"`
+	Address         string `db:"address" structs:"address"`
+	TownName        string `db:"town_name" structs:"town_name"`
+	CountryName     string `db:"country_name" structs:"country_name"`
+	TimeZone        string `db:"time_zone" structs:"time_zone"`
 }

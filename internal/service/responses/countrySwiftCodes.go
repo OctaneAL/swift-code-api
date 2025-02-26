@@ -12,7 +12,7 @@ func NewCountrySwiftCodes(swiftCodes []data.SwiftCode) CountrySwiftCodes {
 	response := CountrySwiftCodes{}
 
 	for _, swiftCode := range swiftCodes {
-		response.CountryISO2 = swiftCode.CountryISOCode
+		response.CountryISO2 = swiftCode.CountryISO2Code
 		response.CountryName = swiftCode.CountryName
 		response.SwiftCodes = append(response.SwiftCodes, NewSwiftCodeDetails(swiftCode))
 	}
@@ -23,8 +23,8 @@ func NewCountrySwiftCodes(swiftCodes []data.SwiftCode) CountrySwiftCodes {
 func NewSwiftCodeDetails(swiftCode data.SwiftCode) SwiftCodeDetails {
 	return SwiftCodeDetails{
 		Address:       swiftCode.Address,
-		BankName:      swiftCode.Name,
-		CountryISO2:   swiftCode.CountryISOCode,
+		BankName:      swiftCode.BankName,
+		CountryISO2:   swiftCode.CountryISO2Code,
 		CountryName:   swiftCode.CountryName,
 		IsHeadquarter: len(swiftCode.SwiftCode) >= 3 && swiftCode.SwiftCode[len(swiftCode.SwiftCode)-3:] == "XXX",
 		SwiftCode:     swiftCode.SwiftCode,

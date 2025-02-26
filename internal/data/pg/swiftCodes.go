@@ -14,10 +14,10 @@ import (
 const (
 	swiftCodesTableName            = "swift_codes"
 	swiftCodesIDColumn             = "id"
-	swiftCodesCountryISOCodeColumn = "country_iso_code"
+	swiftCodesCountryISOCodeColumn = "country_iso2_code"
 	swiftCodesSwiftCodeColumn      = "swift_code"
 	swiftCodesCodeTypeColumn       = "code_type"
-	swiftCodesNameColumn           = "name"
+	swiftCodesBankNameColumn       = "bank_name"
 	swiftCodesAddressColumn        = "address"
 	swiftCodesTownNameColumn       = "town_name"
 	swiftCodesCountryNameColumn    = "country_name"
@@ -29,7 +29,7 @@ var swiftCodesColumns = []string{
 	swiftCodesCountryISOCodeColumn,
 	swiftCodesSwiftCodeColumn,
 	swiftCodesCodeTypeColumn,
-	swiftCodesNameColumn,
+	swiftCodesBankNameColumn,
 	swiftCodesAddressColumn,
 	swiftCodesTownNameColumn,
 	swiftCodesCountryNameColumn,
@@ -66,7 +66,7 @@ func (q swiftCodesQ) Upsert(swiftCodes ...data.SwiftCode) error {
 		query = query.Values(structs.Values(swiftCode)...)
 	}
 	// TODO: implement this via library, not by hand
-	query = query.Suffix("ON CONFLICT (swift_code) DO UPDATE SET country_iso_code = EXCLUDED.country_iso_code, code_type = EXCLUDED.code_type, name = EXCLUDED.name, address = EXCLUDED.address, town_name = EXCLUDED.town_name, country_name = EXCLUDED.country_name, time_zone = EXCLUDED.time_zone")
+	query = query.Suffix("ON CONFLICT (swift_code) DO UPDATE SET country_iso2_code = EXCLUDED.country_iso2_code, code_type = EXCLUDED.code_type, bank_name = EXCLUDED.bank_name, address = EXCLUDED.address, town_name = EXCLUDED.town_name, country_name = EXCLUDED.country_name, time_zone = EXCLUDED.time_zone")
 
 	return q.db.Exec(query)
 }
