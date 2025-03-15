@@ -306,7 +306,7 @@ POST /v1/swift-codes/
 ```
 Adds a new SWIFT code to the database.
 
-#### Successful Response (201 Created)  
+#### Successful Response (200 OK)
 If the SWIFT code is successfully created, the API returns a confirmation message.
 
 **Example Request:**  
